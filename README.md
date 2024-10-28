@@ -15,8 +15,8 @@ It is assumed that you have a Gmail account.
 ## Cloning the Repository
 
 ```sh
-git clone https://github.com/yourusername/your-repo.git
-cd your-repo
+git clone https://github.com/Aesonnn/WADT-Lab2.git
+cd WADT-Lab2
 ```
 
 ## Installing Django
@@ -25,7 +25,6 @@ cd your-repo
 
     ```sh
     python3 -m venv env
-    source env/bin/activate  # On Windows use `env\Scripts\activate`
     ```
 
 2. Install Django:
@@ -39,7 +38,7 @@ cd your-repo
 1. Navigate to the project directory:
 
     ```sh
-    cd your_project_directory
+    cd myproject
     ```
 
 2. Run the development server:

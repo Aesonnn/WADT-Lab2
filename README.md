@@ -8,14 +8,18 @@
 It is assumed that you have a Gmail account. 
 
 1. Go to your [Google Account](https://myaccount.google.com/apppasswords).
+
    ![image](https://github.com/user-attachments/assets/991a0c5d-0708-4191-b0af-51c251a30886)
 
 3. Enter the **App name** and click **Create**.
 4. A pop-up window will appear with the App password. Copy the 16-character code.
-5. Tap **Done**.
-6. Go to the /myproject/settings.py file and replace the `EMAIL_HOST_PASSWORD` with the 16-character code.
-7. Change the `EMAIL_HOST_USER` to your Gmail account.
-8. Change the `DEFAULT_FROM_EMAIL` to your Gmail account.
+   
+![image](https://github.com/user-attachments/assets/b22776a8-9403-438b-8ff4-5f8833e9b0dd)
+
+6. Tap **Done**.
+7. Go to the /myproject/settings.py file and replace the `EMAIL_HOST_PASSWORD` with the 16-character code.
+8. Change the `EMAIL_HOST_USER` to your Gmail account.
+9. Change the `DEFAULT_FROM_EMAIL` to your Gmail account.
 
 ## Cloning the Repository
 

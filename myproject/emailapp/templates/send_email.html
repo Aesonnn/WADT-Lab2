@@ -1,0 +1,163 @@
+<!-- emailapp/templates/send_email.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Email</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .mail-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            display: none;
+        }
+        .gradient-animation {
+            background: linear-gradient(270deg, #b554ed, #6a0dad);
+            background-size: 400% 400%;
+            animation: gradient 3s ease infinite;
+        }
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        .progress-bar {
+            width: 0;
+            height: 4px;
+            background-color: #b554ed;
+            transition: width 2s;
+        }
+        .info-card {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            transform: translateX(10px) translateY(-50%);
+            width: 250px;
+            background-color: #fff;
+            color: #000;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-200 flex items-center justify-center min-h-screen">
+    <section class="bg-gray-50 dark:bg-gray-900 w-full">
+        <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+            <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-2xl xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+                <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                    <div class="flex items-center">
+                        <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                            Send Email
+                        </h1>
+                        <div class="relative ml-2">
+                            <i class="fas fa-info-circle text-gray-500 dark:text-gray-400 cursor-pointer"></i>
+                            <div class="info-card">
+                                <p>This form allows you to send an email to a single recipient or multiple recipients selected from the list below.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="space-y-4 md:space-y-6" action="#" method="post" id="emailForm">
+                        {% csrf_token %}
+                        <div>
+                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Recipient Email</label>
+                            <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Recipient Email">
+                            <a href="{% url 'add_person' %}" class="inline-block text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-4 py-2 mt-4 text-center dark:bg-yellow-500 dark:hover:bg-yellow-600 dark:focus:ring-yellow-700">Add Contact</a>
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Contacts (Optional)</label>
+                            <div class="max-h-40 overflow-y-auto pr-2">
+                                {% for person in people %}
+                                    <div class="flex items-center mb-2">
+                                        <input type="checkbox" name="recipients" value="{{ person.email }}" class="mr-2">
+                                        <label class="text-gray-900 dark:text-gray-200">{{ person.name }} - {{ person.email }}</label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div>
+                            <label for="subject" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Subject</label>
+                            <input type="text" name="subject" id="subject" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                        </div>
+                        <div>
+                            <label for="body" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Body</label>
+                            <textarea name="body" id="body" rows="4" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required></textarea>
+                        </div>
+                        <button type="submit" class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 gradient-animation" style="background-color: #b554ed;">Send Email</button>
+                        <div class="progress-bar mt-4"></div>
+                    </form>
+                    {% if messages %}
+                        <ul class="mt-4">
+                        {% for message in messages %}
+                            <li class="text-{{ message.tags }}-500">{{ message }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+    <i class="fas fa-envelope mail-icon text-blue-500"></i>
+
+    <script>
+        $(document).ready(function() {
+            $('#emailForm').on('submit', function(event) {
+                event.preventDefault();
+                $('.mail-icon').fadeIn().animate({
+                    top: '-=100px',
+                    opacity: 0
+                }, 1000, function() {
+                    $(this).css({
+                        top: '50%',
+                        opacity: 1,
+                        display: 'none'
+                    });
+                });
+    
+                // Animate the progress bar
+                $('.progress-bar').css('width', '100%');
+    
+                // Submit the form after the animation
+                setTimeout(function() {
+                    $('#emailForm').off('submit').submit();
+                }, 2000); 
+            });
+    
+            // Add gradient animation on hover
+            $('button[type="submit"]').hover(
+                function() {
+                    $(this).addClass('gradient-animation');
+                },
+                function() {
+                    $(this).removeClass('gradient-animation');
+                }
+            );
+    
+            // Show info card on hover
+            $('.fa-info-circle').hover(
+                function() {
+                    $(this).siblings('.info-card').fadeIn();
+                },
+                function() {
+                    $(this).siblings('.info-card').fadeOut();
+                }
+            );
+        });
+    </script>
+</body>
+</html>

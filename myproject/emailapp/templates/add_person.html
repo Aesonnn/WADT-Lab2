@@ -1,0 +1,106 @@
+<!-- emailapp/templates/add_person.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Person</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .mail-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            display: none;
+        }
+        .gradient-animation {
+            background: linear-gradient(270deg, #b554ed, #6a0dad);
+            background-size: 400% 400%;
+            animation: gradient 3s ease infinite;
+        }
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-200 flex items-center justify-center min-h-screen">
+    <section class="bg-gray-50 dark:bg-gray-900 w-full">
+        <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+            <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-2xl xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+                <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <a href="{% url 'send_email' %}" class="text-gray-900 dark:text-white">
+                                <button class="bg-yellow-500 text-gray-900 px-3 py-1 rounded-lg flex items-center">
+                                    <i class="fas fa-arrow-left"></i> <span class="ml-2">Back</span>
+                                </button>
+                            </a>
+                        </div>
+                        <div class="flex justify-start w-2/3">
+                            <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                                Add Contact
+                            </h1>
+                        </div>
+                    </div>
+                    <div class="flex">
+                        <div class="w-1/2 pr-4">
+                            <form class="space-y-4 md:space-y-6" action="#" method="post">
+                                {% csrf_token %}
+                                <div>
+                                    <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+                                    <input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Name" required>
+                                </div>
+                                <div>
+                                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                                    <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Email" required>
+                                </div>
+                                <button type="submit" class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 gradient-animation" style="background-color: #b554ed;">Add Contact</button>
+                            </form>
+                            {% if messages %}
+                                <ul class="mt-4">
+                                {% for message in messages %}
+                                    <li class="text-{{ message.tags }}-500">{{ message }}</li>
+                                {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+                        <div class="w-1/2 pl-4">
+                            <h2 class="text-lg font-bold leading-tight tracking-tight text-gray-900 md:text-xl dark:text-white">
+                                Contacts
+                            </h2>
+                            <div class="mt-4 space-y-2 h-64 overflow-y-auto pr-3">
+                                <ul class="space-y-2">
+                                    {% for person in people %}
+                                        <li class="text-gray-900 dark:text-gray-200 flex justify-between items-center border-b border-gray-300 dark:border-gray-700 pb-2">
+                                            <span>{{ person.name }} - {{ person.email }}</span>
+                                            <form action="{% url 'delete_person' person.id %}" method="post" class="inline">
+                                                {% csrf_token %}
+                                                <button type="submit" class="text-red-500 hover:text-red-700">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

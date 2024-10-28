@@ -1,6 +1,9 @@
 # Lab 2 - Django Application For Sending Emails
 
-## Creating an App Password in Gmail
+## Pre-requisites
+- Python 3.x installed. You can download it from the [official Python website](https://www.python.org/downloads/).
+
+## Setting Up the Email Backend
 
 It is assumed that you have a Gmail account. 
 

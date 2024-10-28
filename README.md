@@ -7,7 +7,7 @@
 
 It is assumed that you have a Gmail account. 
 
-1. Go to your [Google Account](https://myaccount.google.com/apppasswords).
+1. Go to your [Google Account App Passwords](https://myaccount.google.com/apppasswords).
 
 ![image](https://github.com/user-attachments/assets/991a0c5d-0708-4191-b0af-51c251a30886)
 

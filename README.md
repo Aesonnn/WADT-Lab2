@@ -9,7 +9,7 @@ It is assumed that you have a Gmail account.
 
 1. Go to your [Google Account](https://myaccount.google.com/apppasswords).
 
-   ![image](https://github.com/user-attachments/assets/991a0c5d-0708-4191-b0af-51c251a30886)
+![image](https://github.com/user-attachments/assets/991a0c5d-0708-4191-b0af-51c251a30886)
 
 3. Enter the **App name** and click **Create**.
 4. A pop-up window will appear with the App password. Copy the 16-character code.

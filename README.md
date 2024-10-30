@@ -41,6 +41,11 @@ cd WADT-Lab2
     ```sh
     pip install django
     ```
+3. (On Linux) If you get the error that pip is not installed run:
+
+    ```sh
+    sudo apt install python3-pip
+    ```
 
 ## Running the App
 

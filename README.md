@@ -54,11 +54,15 @@ cd WADT-Lab2
     ```sh
     cd myproject
     ```
-
-2. Run the development server:
+2. Apply necessary migrations:
 
     ```sh
-    python manage.py runserver
+    python3 manage.py migrate
+    ```
+3. Run the server:
+
+    ```sh
+    python3 manage.py runserver
     ```
 
-3. Open your web browser and go to `http://127.0.0.1:8000/` to see your app in action.
+4. Open your web browser and go to `http://127.0.0.1:8000/` to see your app in action.
